@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8000";
+const baseUrl = "https://expense-tracker-backend-0ijd.onrender.com";
 
 export async function registerUser(userData) {
   try {
