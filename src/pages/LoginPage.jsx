@@ -21,7 +21,12 @@ function LoginPage() {
         return toast.error("Wrong credentials, check email or password");
       }
       dispatch(login(userData));
-      cookie.set("token", userData.token, { path: "/", maxAge: 60 * 60 * 24 });
+      cookie.set("token", userData.token, {
+        path: "/",
+        maxAge: 60 * 60 * 24,
+        secure: true,
+        sameSite: "None",
+      });
       toast.success("Login successful");
       setTimeout(() => {
         navigate("/dashboard");
