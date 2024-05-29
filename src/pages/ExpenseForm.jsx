@@ -29,10 +29,13 @@ function ExpenseForm() {
     addExpense(token, expense);
     dispatch(fetchMainData({ token, userId }));
     dispatch(fetchChartData({ token }));
-    toast.success("Expense added successfully,");
+    toast.success("Expense added successfully, redirecting");
     setName("");
     setAmount("");
     setCategory("");
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 4000);
   };
   return (
     <div className="h-[100vh] flex flex-col gap-5 justify-center items-center relative">

@@ -15,12 +15,14 @@ export const fetchChartData = createAsyncThunk(
   }
 );
 
+const initialState = {
+  chartData: [],
+  status: "idle",
+};
+
 const chartSlice = createSlice({
   name: "chart",
-  initialState: {
-    data: [],
-    status: "idle",
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -28,7 +30,7 @@ const chartSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchChartData.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.chartData = action.payload;
         state.status = "succeeded";
       })
       .addCase(fetchChartData.rejected, (state) => {

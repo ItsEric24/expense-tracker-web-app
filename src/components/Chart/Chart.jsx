@@ -1,22 +1,10 @@
 import { LineChart } from "@mui/x-charts/LineChart";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
-import { useEffect } from "react";
-import Cookies from "universal-cookie";
-import { fetchChartData } from "../../features/chart/chartDataSlice";
 
 function Chart() {
-  const chartData = useSelector((state) => state.chart.data);
-  const status = useSelector((state) => state.chart.status);
+  const { chartData, status } = useSelector((state) => state.chart);
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const dispatch = useDispatch();
-  const token = new Cookies().get("token");
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchChartData({ token }));
-    }
-  }, [status, dispatch, token]);
 
   return (
     <div className="bg-white pl-3 p-5 w-[860px] rounded-2xl shadow-md">

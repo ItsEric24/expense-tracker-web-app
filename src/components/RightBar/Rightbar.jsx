@@ -43,7 +43,7 @@ function Rightbar() {
           {data.map((item) => (
             <div
               key={item._id}
-              className="flex items-center px-6 py-4 justify-between border-b border-gray-200"
+              className="flex items-center px-6 py-4 mb-2 justify-between border-b border-gray-200"
             >
               <div className="flex flex-col gap-1">
                 <h4 className="font-nunito font-normal text-lg">{item.name}</h4>

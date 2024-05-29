@@ -26,7 +26,7 @@ export const fetchMainData = createAsyncThunk(
 const mainDataSlice = createSlice({
   name: "main",
   initialState: {
-    data: [],
+    mainData: [],
     status: "idle",
   },
   reducers: {},
@@ -36,7 +36,7 @@ const mainDataSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMainData.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.mainData = action.payload;
         state.status = "succeeded";
       })
       .addCase(fetchMainData.rejected, (state) => {

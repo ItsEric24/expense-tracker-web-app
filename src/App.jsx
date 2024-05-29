@@ -3,15 +3,18 @@ import "./App.css";
 import Header from "./Layouts/Header/Header";
 import Main from "./Layouts/Main/Main";
 import Rightbar from "./components/RightBar/Rightbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getExpenses } from "./features/expenses/expenseSlice";
 import { expenseData } from "./utils/request";
 import { useNavigate } from "react-router-dom";
+import { fetchChartData } from "./features/chart/chartDataSlice";
+import { fetchMainData } from "./features/main/mainSlice";
 import Cookies from "universal-cookie";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { userId } = useSelector((state) => state.user);
   const token = new Cookies().get("token");
   useEffect(() => {
     const fetchData = async () => {
@@ -24,12 +27,14 @@ function App() {
         console.error("Error fetching expense data:", error);
       }
     };
+    dispatch(fetchChartData({ token }));
+    dispatch(fetchMainData({ token, userId }));
     fetchData();
 
     if (!token) {
       navigate("/login");
     }
-  }, [token, dispatch, navigate]);
+  }, [token, dispatch, navigate, userId]);
   return (
     <div className="bg-[#FAF9F9] pb-2 overflow-scroll w-full h-[100vh]">
       <Header />
