@@ -41,6 +41,8 @@ function LoginPage() {
       cookie.set("token", userData.token, {
         path: "/",
         maxAge: 60 * 60 * 24,
+        sameSite: "none",
+        secure: true,
       });
       toast.success("Login successful");
       setTimeout(() => {
