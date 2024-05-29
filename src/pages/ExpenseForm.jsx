@@ -4,11 +4,19 @@ import { useState } from "react";
 import Cookies from "universal-cookie";
 import { addExpense } from "../utils/request";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMainData } from "../features/main/mainSlice";
+import { fetchChartData } from "../features/chart/chartDataSlice";
 
 function ExpenseForm() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userId } = useSelector((state) => state.user);
+  const token = new Cookies().get("token");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,12 +26,13 @@ function ExpenseForm() {
       toast.error("Please fill in all fields");
       return;
     }
-    const token = new Cookies().get("token");
     addExpense(token, expense);
+    dispatch(fetchMainData({ token, userId }));
+    dispatch(fetchChartData({ token }));
+    toast.success("Expense added successfully,");
     setName("");
     setAmount("");
     setCategory("");
-    toast.success("Expense added successfully");
   };
   return (
     <div className="h-[100vh] flex flex-col gap-5 justify-center items-center relative">
@@ -38,6 +47,7 @@ function ExpenseForm() {
           id="name"
           value={name}
           required
+          placeholder="name of expense"
           onChange={(e) => setName(e.target.value)}
           className="bg-gray-100 p-3 border-2 mb-5 border-gray-200 rounded-md outline-none text-black"
         />
@@ -47,12 +57,11 @@ function ExpenseForm() {
           id="amount"
           value={amount}
           required
+          placeholder="amount"
           onChange={(e) => setAmount(e.target.value)}
           className="bg-gray-100 p-3 border-2 mb-5 border-gray-200 rounded-md outline-none text-black"
         />
-        <label htmlFor="category">Category</label>
         <select
-          id="category"
           onChange={(e) => setCategory(e.target.value)}
           value={category}
           required

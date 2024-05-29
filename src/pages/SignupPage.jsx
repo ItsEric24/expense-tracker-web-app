@@ -2,6 +2,8 @@ import { useState } from "react";
 import { registerUser } from "../utils/request";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import validator from "validator";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -12,6 +14,14 @@ function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!username || !email || !password) {
+        return toast.error("Please provide username, email and password");
+      }
+
+      if (!validator.isEmail(email)) {
+        return toast.error("Please provide a valid email address");
+      }
+
       const userData = await registerUser({ username, email, password });
       if (userData) {
         toast.success(userData.message + " You'll be redirected to login");
@@ -77,6 +87,12 @@ function SignupPage() {
         >
           Sign Up
         </button>
+        <p className="text-black text-lg mt-5">
+          Already have an account?{" "}
+          <Link to="/login" className="text-black underline">
+            Login
+          </Link>
+        </p>
       </form>
       <ToastContainer />
     </div>

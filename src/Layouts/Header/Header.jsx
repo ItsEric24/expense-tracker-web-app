@@ -3,12 +3,13 @@ import profile from "./../../assets/images/png-profile.png";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Logout from "../../components/Logout/Logout";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 function Header() {
   const username = useSelector((state) => state.user.username);
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className="px-4 py-1 bg-white shadow-sm">
+    <header className="px-4 py-1 w-full relative bg-white shadow-sm">
       <div className="flex justify-between items-center p-4">
         <div className="flex items-center gap-1">
           <img className="w-[40px] h-[40px]" src={logo} alt="logo" />
@@ -16,10 +17,7 @@ function Header() {
             Trackify Dashboard
           </h2>
         </div>
-        <div
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex relative items-center gap-3"
-        >
+        <div className="flex items-center gap-3">
           <img
             className="w-[70px] h-[70px] rounded-[30%]"
             src={profile}
@@ -28,6 +26,10 @@ function Header() {
           <h3 className="text-black font-nunito font-semibold text-lg">
             Hi, {username}
           </h3>
+          <MoreVertOutlinedIcon
+            cursor="pointer"
+            onClick={() => setIsOpen(!isOpen)}
+          />
           {isOpen ? <Logout /> : null}
         </div>
       </div>

@@ -31,9 +31,9 @@ function App() {
     }
   }, [token, dispatch, navigate]);
   return (
-    <div className="bg-[#FAF9F9] w-full h-[100vh]">
+    <div className="bg-[#FAF9F9] pb-2 overflow-scroll w-full h-[100vh]">
       <Header />
-      <div className="flex gap-5 pl-5 py-4 w-full h-[86%]">
+      <div className="flex gap-3 px-2 py-4 h-[86%]">
         <Main />
         <Rightbar />
       </div>

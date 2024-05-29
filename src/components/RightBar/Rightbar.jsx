@@ -8,24 +8,28 @@ import { ToastContainer, toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { deleteExpenses } from "../../features/expenses/expenseSlice";
 import { useDispatch } from "react-redux";
+import { fetchMainData } from "../../features/main/mainSlice";
+import { fetchChartData } from "../../features/chart/chartDataSlice";
 
 function Rightbar() {
   const data = useSelector((state) => state.expense.expenses) || [];
   const token = new Cookies().get("token");
   const dispatch = useDispatch();
+  const { userId } = useSelector((state) => state.user);
 
   const handleDelete = async (id) => {
     try {
       await deleteExpense(token, id);
       dispatch(deleteExpenses(id));
+      dispatch(fetchMainData({ token, userId }));
+      dispatch(fetchChartData({ token }));
       toast.success("Expense deleted successfully");
-      window.location.reload();
     } catch (error) {
       toast.error("There was an error deleting expense");
     }
   };
   return (
-    <div className="bg-white relative shadow-md pt-8 w-[400px] rounded-2xl">
+    <div className="bg-white relative shadow-md pt-8 w-full h-[100%] rounded-2xl">
       <ToastContainer />
       <h2 className="text-center font-semibold font-nunito text-lg border-b pb-5 border-b-gray-200 text-gray-500">
         Your Expense History

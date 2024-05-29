@@ -1,4 +1,11 @@
-const baseUrl = "https://expense-tracker-backend-0ijd.onrender.com";
+const env = "development";
+let baseUrl = "";
+
+if (env === "production") {
+  baseUrl = "https://expense-tracker-backend-0ijd.onrender.com";
+} else {
+  baseUrl = "http://localhost:8000";
+}
 
 export async function registerUser(userData) {
   try {
