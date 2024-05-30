@@ -29,7 +29,7 @@ function Rightbar() {
     }
   };
   return (
-    <div className="bg-white relative shadow-md pt-8 w-full h-[100%] rounded-2xl">
+    <div className="bg-white relative shadow-md pt-8 w-full h-[100%] border-2 border-gray-100 rounded-2xl">
       <ToastContainer />
       <h2 className="text-center font-semibold font-nunito text-lg border-b pb-5 border-b-gray-200 text-gray-500">
         Your Expense History
@@ -55,8 +55,8 @@ function Rightbar() {
                 <span
                   className={`font-bold font-nunito text-base ${
                     item.category !== "income"
-                      ? "text-red-500"
-                      : "text-green-500"
+                      ? "text-red-600"
+                      : "text-green-600"
                   }`}
                 >
                   KES {item.amount}

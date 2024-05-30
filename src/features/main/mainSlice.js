@@ -4,7 +4,7 @@ import { getTotalAmount } from "../../utils/request";
 export const fetchMainData = createAsyncThunk(
   "main/fetchMainData",
   async ({ token, userId }) => {
-    const categories = ["food", "bills", "entertainment"];
+    const categories = ["food", "bills", "entertainment", "luxuries"];
     const totalData = [];
     try {
       for (let i = 0; i < categories.length; i++) {

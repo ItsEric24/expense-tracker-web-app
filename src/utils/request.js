@@ -1,7 +1,7 @@
 const env = "production";
 const baseUrl =
   env === "development"
-    ? "http://localhost:5000"
+    ? "http://localhost:8000"
     : "https://expense-tracker-backend-0ijd.onrender.com";
 
 export async function registerUser(userData) {

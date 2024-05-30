@@ -1,5 +1,4 @@
 import Card from "../../components/Card/Card";
-import Chart from "../../components/Chart/Chart";
 import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 
@@ -7,13 +6,13 @@ function Main() {
   const { mainData, status } = useSelector((state) => state.main);
 
   return (
-    <div className="flex flex-col w-full gap-8 items-center">
+    <div className="w-full">
       {status === "loading" ? (
         <Skeleton
           variant="rectangular"
           sx={{ bgcolor: "white", borderRadius: "10px" }}
-          width={800}
-          height={380}
+          width={1200}
+          height={150}
         />
       ) : (
         <div className="flex items-center gap-5">
@@ -22,7 +21,6 @@ function Main() {
           ))}
         </div>
       )}
-      <Chart />
     </div>
   );
 }
