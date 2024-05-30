@@ -19,7 +19,6 @@ function App() {
   const { userId } = useSelector((state) => state.user);
   const token = new Cookies().get("token");
   const { mainData } = useSelector((state) => state.main);
-  console.log(mainData);
   useEffect(() => {
     const fetchData = async () => {
       try {
