@@ -20,6 +20,12 @@ function Navbar() {
           About Trackify?
         </Link>
         <Link
+          to="/tutorial"
+          className="text-black text-base font-nunito font-semibold"
+        >
+          Tutorial
+        </Link>
+        <Link
           to={token ? "/dashboard" : "/login"}
           className="py-3 px-8 bg-black text-white text-lg rounded-lg"
         >

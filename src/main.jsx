@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ExpenseForm from "./pages/ExpenseForm.jsx";
+import Tutorial from "./pages/Tutorial.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/add-expense",
     element: <ExpenseForm />,
+  },
+  {
+    path: "/tutorial",
+    element: <Tutorial />,
   },
 ]);
 
