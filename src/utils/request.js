@@ -1,4 +1,4 @@
-const env = "development";
+const env = "production";
 const baseUrl =
   env === "development"
     ? "http://localhost:8000"
