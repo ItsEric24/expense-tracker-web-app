@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import "./App.css";
 import Header from "./Layouts/Header/Header";
 import Main from "./Layouts/Main/Main";
@@ -17,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useSelector((state) => state.user);
-  const token = new Cookies().get("token");
+  const token = useMemo(() => new Cookies().get("token"), []);
   const { mainData } = useSelector((state) => state.main);
   useEffect(() => {
     const fetchData = async () => {

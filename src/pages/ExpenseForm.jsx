@@ -36,6 +36,8 @@ function ExpenseForm() {
     setTimeout(() => {
       navigate("/dashboard");
     }, 4000);
+    console.log(userId);
+    console.log(token);
   };
   return (
     <div className="h-[100vh] flex flex-col gap-5 justify-center items-center relative">

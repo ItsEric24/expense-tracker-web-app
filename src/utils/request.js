@@ -1,4 +1,4 @@
-const env = "production";
+const env = "development";
 const baseUrl =
   env === "development"
     ? "http://localhost:8000"
@@ -6,7 +6,7 @@ const baseUrl =
 
 export async function registerUser(userData) {
   try {
-    const response = await fetch(baseUrl + "/users/register", {
+    const response = await fetch(baseUrl + "/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export async function registerUser(userData) {
 
 export async function loginUser(userData) {
   try {
-    const response = await fetch(baseUrl + "/users/login", {
+    const response = await fetch(baseUrl + "/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

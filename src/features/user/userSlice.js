@@ -7,6 +7,7 @@ const initialState = {
   username: null,
   userId: null,
   token: null,
+  currency: "USD",
   isAuthenticated: false,
   error: null,
 };
@@ -18,7 +19,6 @@ const userSlice = createSlice({
     login: (state, action) => {
       state.token = action.payload.token;
       state.username = action.payload.user;
-      state.isAuthenticated = true;
       state.userId = action.payload.userId;
     },
     logout: (state) => {
@@ -27,8 +27,11 @@ const userSlice = createSlice({
       state.isLoading = false;
       cookie.remove("token", { path: "/" });
     },
+    changeCurrency: (state, action) => {
+      state.currency = action.payload;
+    },
   },
 });
 
-export const { login, logout, getUserName } = userSlice.actions;
+export const { login, logout, changeCurrency } = userSlice.actions;
 export default userSlice.reducer;

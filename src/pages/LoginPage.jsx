@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { loginUser } from "../utils/request";
 import { useDispatch } from "react-redux";
 import { login } from "../features/user/userSlice";
@@ -9,13 +9,45 @@ import validator from "validator";
 import Cookies from "universal-cookie";
 import { fetchMainData } from "../features/main/mainSlice";
 import { fetchChartData } from "../features/chart/chartDataSlice";
+import GoogleIcon from "@mui/icons-material/Google";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookie = new Cookies();
+  const cookie = useMemo(() => new Cookies(), []);
+  const reactEnv = "production";
+  const backendURL =
+    reactEnv === "production"
+      ? "https://expense-tracker-backend-0ijd.onrender.com"
+      : "http://localhost:8000";
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const username = urlParams.get("username");
+    const userId = urlParams.get("userId");
+    if (token) {
+      dispatch(login({ token, user: username, userId }));
+      dispatch(fetchMainData({ token, userId }));
+      dispatch(fetchChartData({ token }));
+      cookie.set("token", token, {
+        path: "/",
+        maxAge: 60 * 60 * 24,
+        sameSite: "none",
+        secure: true,
+      });
+      toast.success("Login successful");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    }
+  }, [navigate, dispatch, cookie]);
+
+  const googleAuth = async () => {
+    window.open(`${backendURL}/auth/google`, "_self");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +118,7 @@ function LoginPage() {
           className="bg-gray-100 p-3 border-2 border-gray-200 rounded-md outline-none text-black"
         />
         <button
-          className="bg-black text-white py-2 pt-3 text-lg rounded-md mt-10"
+          className="bg-black text-white py-2 pt-3 text-lg rounded-md mt-10 mb-4"
           onClick={handleSubmit}
         >
           Sign In
@@ -98,6 +130,14 @@ function LoginPage() {
           </Link>
         </p>
       </form>
+      <h4 className="text-black font-bold mt-3 text-xl">or</h4>
+      <button
+        className="bg-black text-white w-[40%] flex gap-1 justify-center items-center py-2 pt-3 text-lg rounded-md"
+        onClick={googleAuth}
+      >
+        <GoogleIcon />
+        Sign in with Google
+      </button>
       <ToastContainer />
     </div>
   );

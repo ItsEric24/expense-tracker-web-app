@@ -3,8 +3,10 @@ import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import DirectionsCarFilledOutlinedIcon from "@mui/icons-material/DirectionsCarFilledOutlined";
+import { useSelector } from "react-redux";
 
 function Card({ name, price }) {
+  const currency = useSelector((state) => state.user.currency);
   function selectIcon() {
     switch (name) {
       case "Food":
@@ -32,6 +34,11 @@ function Card({ name, price }) {
     }
   }
   const icon = selectIcon();
+  const formatedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    maximumSignificantDigits: 3,
+  });
   return (
     <div className="bg-white p-8 w-full shadow-md border-2 border-gray-100 rounded-2xl">
       <div className="flex flex-col gap-3">
@@ -41,7 +48,9 @@ function Card({ name, price }) {
           </p>
           {icon}
         </span>
-        <h3 className="font-bold text-xl font-nunito">KES {price}</h3>
+        <h3 className="font-bold text-xl font-nunito">
+          {formatedPrice.format(price)}
+        </h3>
       </div>
     </div>
   );

@@ -2,15 +2,36 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getChartData } from "../../utils/request";
 
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 export const fetchChartData = createAsyncThunk(
   "chart/fetchChartData",
   async ({ token }) => {
     const data = await getChartData(token);
-    const chartData = new Array(7).fill(0);
 
-    for (let i = 0; i < data.length; i++) {
-      chartData[data[i]._id - 1] = data[i].total;
-    }
+    const chartData = Array.from({ length: 12 }, (v, i) => ({
+      label: `${monthNames[i]}`,
+      total: 0,
+    }));
+
+    data.forEach((item) => {
+      const index = item.month - 1;
+      chartData[index].total = item.total;
+    });
+
     return chartData;
   }
 );

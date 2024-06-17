@@ -15,7 +15,7 @@ function Rightbar() {
   const data = useSelector((state) => state.expense.expenses) || [];
   const token = new Cookies().get("token");
   const dispatch = useDispatch();
-  const { userId } = useSelector((state) => state.user);
+  const { userId, currency } = useSelector((state) => state.user);
 
   const handleDelete = async (id) => {
     try {
@@ -28,6 +28,12 @@ function Rightbar() {
       toast.error("There was an error deleting expense");
     }
   };
+
+  const formatedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    maximumSignificantDigits: 3,
+  });
   return (
     <div className="bg-white relative shadow-md pt-8 w-full h-[100%] border-2 border-gray-100 rounded-2xl">
       <ToastContainer />
@@ -39,7 +45,7 @@ function Rightbar() {
           You have no expenses yet, click the add button below to add expenses
         </p>
       ) : (
-        <div className="flex flex-col overflow-scroll h-[500px]">
+        <div className="flex flex-col overflow-scroll h-[80%]">
           {data.map((item) => (
             <div
               key={item._id}
@@ -59,7 +65,7 @@ function Rightbar() {
                       : "text-green-600"
                   }`}
                 >
-                  KES {item.amount}
+                  {formatedPrice.format(item.amount)}
                 </span>
                 <div>
                   <DeleteIcon
